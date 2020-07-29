@@ -1,1 +1,1 @@
-Creating a mobile sampler - sequencer using expo
+Creating a mobile sampler - sequencer
