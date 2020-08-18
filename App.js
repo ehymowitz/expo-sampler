@@ -6,14 +6,20 @@ import { Synth } from "tone"
 const synth = new Synth().toDestination();
 
 
-const Alert = () => {
+const Alert1 = () => {
   synth.triggerAttackRelease("C4", "8n");
+}
+
+const Alert2 = () => {
+  synth.triggerAttackRelease("C5", "8n");
 }
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={()=> Alert()} style={styles.button}>
+      <TouchableOpacity onPress={()=> Alert1()} style={styles.button}>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=> Alert2()} style={styles.button}>
       </TouchableOpacity>
     </View>
   );
