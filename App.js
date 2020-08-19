@@ -46,9 +46,12 @@ export default function App() {
         data={DATA}
         renderItem = {(data) =>
           <TouchableOpacity
-            onPress={() =>
-              synth.triggerAttackRelease(`${data.item.tone}`, `${data.item.length}`)
+            onPress={() => {
+                synth.triggerAttackRelease(`${data.item.tone}`, `${data.item.length}`)
+                window.navigator.vibrate(200);
+              }
             }
+
             style={styles.button}/>
         }
         numColumns={2}
