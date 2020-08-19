@@ -1,41 +1,74 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { Synth } from "tone"
+import { StyleSheet, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
+import { MembraneSynth } from "tone"
 
-const synth = new Synth().toDestination();
+const synth = new MembraneSynth().toDestination();
 
+const DATA = [
+  {
+    id: 0,
+    tone: "A1",
+    length: "8n"
+  },
+  {
+    id: 1,
+    tone: "B1",
+    length: "8n"
+  },
+  {
+    id: 2,
+    tone: "C1",
+    length: "8n"
+  },
+  {
+    id: 3,
+    tone: "D2",
+    length: "8n"
+  },
+  {
+    id: 4,
+    tone: "E1",
+    length: "8n"
+  },
+    {
+    id: 5,
+    tone: "F1",
+    length: "8n"
+  }
 
-const Alert1 = () => {
-  synth.triggerAttackRelease("C4", "8n");
-}
-
-const Alert2 = () => {
-  synth.triggerAttackRelease("C5", "8n");
-}
+]
 
 export default function App() {
+
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={()=> Alert1()} style={styles.button}>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=> Alert2()} style={styles.button}>
-      </TouchableOpacity>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={DATA}
+        renderItem = {(data) =>
+          <TouchableOpacity
+            onPress={() =>
+              synth.triggerAttackRelease(`${data.item.tone}`, `${data.item.length}`)
+            }
+            style={styles.button}/>
+        }
+        numColumns={2}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 50,
     flex: 1,
     backgroundColor: 'rgb(100,100,100)',
     alignItems: 'center',
-    justifyContent: 'center',
   },
 
   button: {
     backgroundColor: "rgb(255,255,255)",
-    padding: 20,
+    padding: 70,
+    margin: 20,
     borderRadius: 5,
   }
 });
