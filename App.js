@@ -55,7 +55,7 @@ export default function App() {
           <TouchableOpacity
             onPress={() => {
               data.item.synth.triggerAttackRelease(`${data.item.tone}`, `${data.item.length}`)
-              window.navigator.vibrate(200);
+              window.navigator.vibrate(50);
               }
             }
             style={styles.button}/>
