@@ -1,39 +1,46 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
-import { MembraneSynth } from "tone"
+import { MembraneSynth, MetalSynth } from "tone"
 
-const synth = new MembraneSynth().toDestination();
+const Memsynth = new MembraneSynth().toDestination();
+const Metsynth = new MetalSynth().toDestination();
 
 const DATA = [
   {
     id: 0,
-    tone: "A1",
+    synth: Memsynth,
+    tone: "A3",
     length: "8n"
   },
   {
     id: 1,
-    tone: "B1",
+    synth: Memsynth,
+    tone: "D3",
     length: "8n"
   },
   {
     id: 2,
+    synth: Memsynth,
     tone: "C1",
     length: "8n"
   },
   {
     id: 3,
-    tone: "D2",
-    length: "8n"
+    synth: Metsynth,
+    tone: "D1",
+    length: "1n"
   },
   {
     id: 4,
-    tone: "E1",
-    length: "8n"
+    synth: Metsynth,
+    tone: "A0",
+    length: "1n"
   },
     {
     id: 5,
-    tone: "F1",
-    length: "8n"
+    synth: Metsynth,
+    tone: "E2",
+    length: "1n"
   }
 
 ]
@@ -47,11 +54,10 @@ export default function App() {
         renderItem = {(data) =>
           <TouchableOpacity
             onPress={() => {
-                synth.triggerAttackRelease(`${data.item.tone}`, `${data.item.length}`)
-                window.navigator.vibrate(200);
+              data.item.synth.triggerAttackRelease(`${data.item.tone}`, `${data.item.length}`)
+              window.navigator.vibrate(200);
               }
             }
-
             style={styles.button}/>
         }
         numColumns={2}
