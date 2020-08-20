@@ -1,9 +1,12 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import { MembraneSynth, MetalSynth } from "tone"
+import { StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { MembraneSynth, MetalSynth, Meter, UserMedia } from "tone"
 
 const Memsynth = new MembraneSynth().toDestination();
 const Metsynth = new MetalSynth().toDestination();
+
+const meter = new Meter();
+const mic = new UserMedia().connect(meter);
 
 const DATA = [
   {
@@ -44,7 +47,26 @@ const DATA = [
   }
 ]
 
+
 export default function MpcButtons() {
+
+  const longPressHandle = () => {
+    mic.open().then(() => {
+      // promise resolves when input is available
+      console.log("mic open");
+      // print the incoming mic levels in decibels
+      setInterval(() => console.log(meter.getValue()), 100);
+    }).catch(e => {
+      // promise is rejected when the user doesn't have or allow mic access
+      console.log("mic not open");
+    });
+  }
+
+  const releaseHandle = () => {
+    console.log("test")
+    mic.close()
+  }
+
   return (
     <FlatList
       data={DATA}
@@ -55,11 +77,15 @@ export default function MpcButtons() {
             window.navigator.vibrate(50);
             }
           }
-          style={styles.button}/>
+          onLongPress={()=>{longPressHandle()}}
+          onMouseUp={()=>{releaseHandle()}}
+          style={styles.button}
+        />
       }
+      keyExtractor={(item, index) => index.toString()}
       numColumns={2}
     />
-  )
+)
 }
 
 const styles = StyleSheet.create({
