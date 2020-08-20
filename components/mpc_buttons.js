@@ -2,11 +2,13 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native';
 import { MembraneSynth, MetalSynth, Meter, UserMedia } from "tone"
 
+// Create Synths
 const Memsynth = new MembraneSynth().toDestination();
 const Metsynth = new MetalSynth().toDestination();
 
-const meter = new Meter();
-const mic = new UserMedia().connect(meter);
+// Create Recording (needs work)
+const meter    = new Meter();
+const mic      = new UserMedia().connect(meter);
 
 const DATA = [
   {
@@ -62,6 +64,7 @@ export default function MpcButtons() {
     });
   }
 
+  // Doesn't work right
   const releaseHandle = () => {
     console.log("test")
     mic.close()
